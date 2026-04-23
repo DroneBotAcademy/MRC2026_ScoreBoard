@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futsal Scoreboard - DRONE MRC 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,700;1,700&family=Orbitron:wght@400;900&family=Share+Tech+Mono&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="p-4 transition-colors duration-500">
+    <div id="futsalPage" class="min-h-screen flex flex-col gap-8 p-2 md:p-6 max-w-[1400px] mx-auto">
+        <button onclick="toggleTheme()" class="theme-toggle-btn fixed top-6 right-6 p-3 bg-slate-800/50 hover:bg-slate-700 text-white rounded-full border border-white/10 transition-all hover:scale-110 shadow-lg z-50" title="Toggle Theme">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+        
+        <header class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border-b-2 border-orange-500">
+            <button onclick="location.href='index.html'" class="px-6 py-2 bg-slate-800 rounded-full font-bold text-xs hover:bg-red-600 transition-all">← EXIT</button>
+            <div class="text-center">
+                <h2 class="race-font text-2xl font-black italic text-orange-500">FUTSAL MATCH</h2>
+                <p id="statusBadge" class="text-orange-400 text-[10px] font-bold tracking-widest uppercase">CONNECTING DATABASE...</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div id="futsalTimer" class="digital-font text-7xl text-orange-400 font-black">00:00:000</div>
+                <div class="flex gap-4 mt-1">
+                    <button onclick="startTimer()" class="btn-timer btn-timer-start">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 2.691l12 7.309-12 7.309V2.691z"/></svg>
+                        START
+                    </button>
+                    <button onclick="stopTimer()" class="btn-timer btn-timer-stop">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+                        STOP
+                    </button>
+                    <button onclick="resetTimer()" class="btn-timer btn-timer-reset">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        RESET
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-2 gap-8 px-10">
+            <div class="flex flex-col gap-2">
+                <label class="text-red-500 font-bold ml-2">RED TEAM</label>
+                <select id="redTeamSelect" class="bg-red-900/20 border border-red-500 text-white p-4 rounded-xl font-bold text-xl outline-none focus:ring-2 ring-red-500">
+                    <option value=""> LOADING RED TEAM...</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-2">
+                <label class="text-blue-500 font-bold ml-2">BLUE TEAM</label>
+                <select id="blueTeamSelect" class="bg-blue-900/20 border border-blue-500 text-white p-4 rounded-xl font-bold text-xl outline-none focus:ring-2 ring-blue-500">
+                    <option value=""> LOADING BLUE TEAM...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 flex-1 gap-8">
+            <div class="score-box-glow flex flex-col items-center justify-center border-t-8 border-red-600 rounded-[3rem] bg-black/20 shadow-2xl">
+                <div id="scoreRed" class="digital-font text-[10rem] md:text-[18rem] text-red-500 leading-none">0</div>
+                <div class="flex gap-4 mt-2 md:mt-6 pb-6">
+                    <button onclick="changeScore('red', 1)" class="w-20 h-20 bg-red-600 rounded-full text-4xl font-black hover:scale-110 active:scale-95 transition-all shadow-lg shadow-red-600/40">+</button>
+                    <button onclick="changeScore('red', -1)" class="w-20 h-20 bg-slate-800 rounded-full text-4xl font-black hover:bg-slate-700 transition-all">-</button>
+                </div>
+            </div>
+            <div class="score-box-glow flex flex-col items-center justify-center border-t-8 border-blue-600 rounded-[3rem] bg-black/20 shadow-2xl">
+                <div id="scoreBlue" class="digital-font text-[10rem] md:text-[18rem] text-blue-500 leading-none">0</div>
+                <div class="flex gap-4 mt-2 md:mt-6 pb-6">
+                    <button onclick="changeScore('blue', 1)" class="w-20 h-20 bg-blue-600 rounded-full text-4xl font-black hover:scale-110 active:scale-95 transition-all shadow-lg shadow-blue-600/40">+</button>
+                    <button onclick="changeScore('blue', -1)" class="w-20 h-20 bg-slate-800 rounded-full text-4xl font-black hover:bg-slate-700 transition-all">-</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-4">
+            <button onclick="syncWithDatabase()" class="px-8 py-4 bg-slate-700 rounded-2xl font-bold hover:bg-slate-600 transition-all">🔄 SYNC DATA</button>
+            <button onclick="saveFutsalResult()" class="btn-pop px-12 py-5 bg-orange-600 rounded-2xl font-black text-xl shadow-lg shadow-orange-600/30 italic">FINISH & SAVE</button>
+            <button onclick="resetFutsal()" class="px-8 py-4 bg-red-900/40 rounded-2xl font-bold hover:bg-red-600 transition-all">RESET MATCH</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. CONFIGURATION & GLOBAL STATE
+        // ==========================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzphLcVJIW04H-cvo2PYssfsvDbzepLnFO-tgVY5h5qFQwGYPT1vwizuX20CW3JHDNM1A/exec';
+        
+        let allTeamsData = {};              // เก็บข้อมูลทีม
+        let timerInterval = null;           // ตัวแปรจับเวลา
+        let msElapsed = 0;                  // เวลาที่ผ่านไป
+        let futsalScore = { red: 0, blue: 0 }; // คะแนน
+        const DATA_SHEET = "Data Futsal";    // ชื่อ Sheet ต้นทาง
+        const SCORE_SHEET = "Scores Futsal"; // ชื่อ Sheet ปลายทาง
+
+        // ==========================================
+        // 2. DATABASE SYNC (ดึงรายชื่อทีม)
+        // ==========================================
+        async function syncWithDatabase() {
+            const redSelect = document.getElementById('redTeamSelect');
+            const blueSelect = document.getElementById('blueTeamSelect');
+            const badge = document.getElementById('statusBadge');
+            if(badge) badge.innerText = " SYNCING WITH GOOGLE SHEETS...";
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?sheetName=${encodeURIComponent(DATA_SHEET)}`);
+                const teams = await response.json(); 
+
+                allTeamsData = {}; 
+                const placeholder = '<option value="">-- เลือกทีมแข่งขัน --</option>';
+                redSelect.innerHTML = blueSelect.innerHTML = placeholder;
+
+                teams.forEach(team => {
+                    allTeamsData[team.id] = team;
+                    const finalTeamName = (team.name && team.name !== "-" && team.name !== "") ? team.name : team.members;
+                    const optionText = `[${team.id}] ${finalTeamName}`;
+                    redSelect.add(new Option(optionText, team.id));
+                    blueSelect.add(new Option(optionText, team.id));
+                });
+
+                if(badge) badge.innerText = ` LOADED ${teams.length} TEAMS FROM ${DATA_SHEET}`;
+            } catch (e) { 
+                if(badge) badge.innerText = " CONNECTION ERROR";
+            }
+        }
+
+        // ==========================================
+        // 3. TIMER SYSTEM (ระบบจับเวลา)
+        // ==========================================
+        function updateTimerUI() {
+            const mins = Math.floor(msElapsed / 60000);
+            const secs = Math.floor((msElapsed % 60000) / 1000);
+            const ms = Math.floor(msElapsed % 1000);
+            document.getElementById('futsalTimer').innerText = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}:${ms.toString().padStart(3, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            const startTime = Date.now() - msElapsed;
+            timerInterval = setInterval(() => {
+                msElapsed = Date.now() - startTime;
+                updateTimerUI();
+            }, 10);
+        }
+
+        function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+        function resetTimer() { stopTimer(); msElapsed = 0; updateTimerUI(); }
+
+        // ==========================================
+        // 4. SCORE SYSTEM (ระบบจัดการคะแนน)
+        // ==========================================
+        function changeScore(team, val) {
+            futsalScore[team] = Math.max(0, futsalScore[team] + val);
+            document.getElementById(team === 'red' ? 'scoreRed' : 'scoreBlue').innerText = futsalScore[team];
+        }
+
+        function resetFutsal() {
+            if (!confirm("รีเซ็ตคะแนนและเวลาทั้งหมด?")) return;
+            resetTimer();
+            futsalScore = { red: 0, blue: 0 };
+            document.getElementById('scoreRed').innerText = "0";
+            document.getElementById('scoreBlue').innerText = "0";
+        }
+
+        // ==========================================
+        // 5. SAVE DATA (บันทึกผลการแข่งขัน)
+        // ==========================================
+        async function saveFutsalResult() {
+            const redId = document.getElementById('redTeamSelect').value;
+            const blueId = document.getElementById('blueTeamSelect').value;
+            const btn = document.querySelector('button[onclick="saveFutsalResult()"]');
+
+            if (!redId || !blueId) return alert("กรุณาเลือกทีมทั้งสองฝั่ง!");
+            if (!confirm("ยืนยันการบันทึกผลการแข่งขัน Futsal?")) return;
+
+            let winner = "เสมอ";
+            if (futsalScore.red > futsalScore.blue) winner = allTeamsData[redId].name + " ชนะ";
+            else if (futsalScore.blue > futsalScore.red) winner = allTeamsData[blueId].name + " ชนะ";
+
+            const payload = {
+                action: "saveFutsal",
+                sheetName: SCORE_SHEET,
+                category: "Futsal Match",
+                redTeam: allTeamsData[redId],
+                blueTeam: allTeamsData[blueId],
+                redScore: futsalScore.red,
+                blueScore: futsalScore.blue,
+                matchTime: document.getElementById('futsalTimer').innerText,
+                winner: winner,
+                timestamp: new Date().toLocaleString('th-TH')
+            };
+
+            btn.innerText = " SAVING..."; btn.disabled = true;
+            try {
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+                alert(" บันทึกลง Scores Futsal เรียบร้อย!");
+                resetFutsal();
+            } catch (e) { alert(" บันทึกไม่สำเร็จ"); }
+            finally { btn.innerText = "FINISH & SAVE"; btn.disabled = false; }
+        }
+
+        // ==========================================
+        // 6. UI & INITIALIZATION
+        // ==========================================
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+    syncWithDatabase();
+});
+    </script>
+</body>
+</html>

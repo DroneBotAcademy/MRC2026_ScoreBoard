@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Scoreboard - DRONE MRC 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,700;1,700&family=Orbitron:wght@400;900&family=Share+Tech+Mono&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="p-4 transition-colors duration-500">
+    <div id="soccerPage" class="min-h-screen flex flex-col gap-8 p-2 md:p-6 max-w-[1400px] mx-auto">
+        <button onclick="toggleTheme()" class="theme-toggle-btn fixed top-6 right-6 p-3 bg-slate-800/50 hover:bg-slate-700 text-white rounded-full border border-white/10 transition-all hover:scale-110 shadow-lg z-50" title="Toggle Theme">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+        
+        <header class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border-b-2 border-yellow-500">
+            <button onclick="location.href='index.html'" class="px-6 py-2 bg-slate-800 rounded-full font-bold text-xs hover:bg-red-600 transition-all">← EXIT</button>
+            <div class="text-center">
+                <h2 id="soccerTitle" class="race-font text-2xl font-black italic">DRONE SOCCER MATCH</h2>
+                <p id="statusBadge" class="text-yellow-500 text-[10px] font-bold tracking-widest">CONNECTING DATABASE...</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div id="soccerTimer" class="digital-font text-7xl text-yellow-400 font-black">00:00:000</div>
+                <div class="flex gap-4 mt-1">
+                    <button onclick="startTimer()" class="btn-timer btn-timer-start">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 2.691l12 7.309-12 7.309V2.691z"/></svg>
+                        START
+                    </button>
+                    <button onclick="stopTimer()" class="btn-timer btn-timer-stop">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+                        STOP
+                    </button>
+                    <button onclick="resetTimer()" class="btn-timer btn-timer-reset">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        RESET
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-2 gap-8 px-10">
+            <div class="flex flex-col gap-2">
+                <label class="text-red-500 font-bold ml-2">RED TEAM</label>
+                <select id="redTeamSelect" class="bg-red-900/20 border border-red-500 text-white p-4 rounded-xl font-bold text-xl outline-none focus:ring-2 ring-red-500">
+                    <option value=""> LOADING RED TEAM...</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-2">
+                <label class="text-blue-500 font-bold ml-2">BLUE TEAM</label>
+                <select id="blueTeamSelect" class="bg-blue-900/20 border border-blue-500 text-white p-4 rounded-xl font-bold text-xl outline-none focus:ring-2 ring-blue-500">
+                    <option value=""> LOADING BLUE TEAM...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 flex-1 gap-8">
+            <div class="score-box-glow flex flex-col items-center justify-center border-t-8 border-red-600 rounded-[3rem] bg-black/20 shadow-2xl">
+                <div id="scoreRed" class="digital-font text-[10rem] md:text-[18rem] text-red-500 leading-none">0</div>
+                <div class="flex gap-4 mt-2 md:mt-6 pb-6">
+                    <button onclick="changeScore('red', 1)" class="w-20 h-20 bg-red-600 rounded-full text-4xl font-black hover:scale-110 active:scale-95 transition-all shadow-lg shadow-red-600/40">+</button>
+                    <button onclick="changeScore('red', -1)" class="w-20 h-20 bg-slate-800 rounded-full text-4xl font-black hover:bg-slate-700 transition-all">-</button>
+                </div>
+            </div>
+            <div class="score-box-glow flex flex-col items-center justify-center border-t-8 border-blue-600 rounded-[3rem] bg-black/20 shadow-2xl">
+                <div id="scoreBlue" class="digital-font text-[10rem] md:text-[18rem] text-blue-500 leading-none">0</div>
+                <div class="flex gap-4 mt-2 md:mt-6 pb-6">
+                    <button onclick="changeScore('blue', 1)" class="w-20 h-20 bg-blue-600 rounded-full text-4xl font-black hover:scale-110 active:scale-95 transition-all shadow-lg shadow-blue-600/40">+</button>
+                    <button onclick="changeScore('blue', -1)" class="w-20 h-20 bg-slate-800 rounded-full text-4xl font-black hover:bg-slate-700 transition-all">-</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-4">
+            <button onclick="syncWithDatabase()" class="btn-action px-8 py-4 bg-slate-700 rounded-2xl font-bold hover:bg-slate-600 transition-all">🔄 SYNC DATA</button>
+            <button onclick="saveSoccerResult()" class="btn-pop px-12 py-5 bg-blue-600 rounded-2xl font-black text-xl shadow-lg shadow-blue-600/30 italic">FINISH & SAVE</button>
+            <button onclick="resetSoccer()" class="px-8 py-4 bg-red-900/40 rounded-2xl font-bold hover:bg-red-600 transition-all">RESET MATCH</button>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzphLcVJIW04H-cvo2PYssfsvDbzepLnFO-tgVY5h5qFQwGYPT1vwizuX20CW3JHDNM1A/exec';
+
+        let allTeamsData = {}; 
+        let currentEventName = ""; 
+        let currentSheetName = ""; 
+        let timerInterval = null;
+        let msElapsed = 0;
+        const MAX_TIME_MS = 180000; // 3 นาที
+        let soccerScore = { red: 0, blue: 0 };
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            currentEventName = params.get('event') || "Drone Soccer";
+            currentSheetName = params.get('sheet') || ""; 
+            
+            const badge = document.getElementById('statusBadge');
+            if (badge) badge.innerText = `SHEET: ${currentSheetName || 'NOT SELECTED'}`;
+        }
+
+        async function syncWithDatabase() {
+            if (!currentSheetName) {
+                alert("Error: ไม่พบชื่อ Sheet ใน URL (?sheet=...)");
+                return;
+            }
+
+            const redSelect = document.getElementById('redTeamSelect');
+            const blueSelect = document.getElementById('blueTeamSelect');
+            const badge = document.getElementById('statusBadge');
+            const syncBtn = document.querySelector('button[onclick="syncWithDatabase()"]');
+
+            if(badge) badge.innerText = " SYNCING WITH GOOGLE SHEETS...";
+            if(syncBtn) syncBtn.innerHTML = '<span class="sync-icon-spin">🔄</span> SYNCING...';
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?sheetName=${encodeURIComponent(currentSheetName)}`);
+                const teams = await response.json(); 
+
+                if (teams.error) {
+                    if(badge) badge.innerText = " ERROR: SHEET NOT FOUND";
+                    return;
+                }
+
+                allTeamsData = {}; 
+                const placeholder = '<option value="">-- เลือกทีมแข่งขัน --</option>';
+                if(redSelect) redSelect.innerHTML = placeholder;
+                if(blueSelect) blueSelect.innerHTML = placeholder;
+
+                teams.forEach(team => {
+                    allTeamsData[team.id] = team;
+                    // ใช้ชื่อทีมจาก Col D ถ้าว่างให้ใช้ชื่อสมาชิกจาก Col C
+                    const finalTeamName = (team.name && team.name !== "-" && team.name !== "") ? team.name : team.members;
+                    const optionText = `[${team.id}] ${finalTeamName}`;
+
+                    if(redSelect) {
+                        const opt = new Option(optionText, team.id);
+                        redSelect.add(opt);
+                    }
+                    if(blueSelect) {
+                        const opt = new Option(optionText, team.id);
+                        blueSelect.add(opt);
+                    }
+                });
+
+                if(badge) badge.innerText = ` LOADED ${teams.length} TEAMS`;
+                if(syncBtn) syncBtn.innerHTML = '🔄 SYNC DATA';
+
+            } catch (e) { 
+                console.error(e);
+                if(badge) badge.innerText = " OFFLINE / CONNECTION ERROR";
+                if(syncBtn) syncBtn.innerHTML = '🔄 SYNC DATA';
+            }
+        }
+
+        // --- ระบบ Timer ---
+        function updateTimerUI() {
+            const mins = Math.floor(msElapsed / 60000);
+            const secs = Math.floor((msElapsed % 60000) / 1000);
+            const ms = Math.floor(msElapsed % 1000);
+            const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}:${ms.toString().padStart(3, '0')}`;
+            document.getElementById('soccerTimer').innerText = timeStr;
+        }
+
+        function startTimer() {
+            if (timerInterval) return; 
+            const startTime = Date.now() - msElapsed;
+            timerInterval = setInterval(() => {
+                msElapsed = Date.now() - startTime;
+                if (msElapsed >= MAX_TIME_MS) {
+                    msElapsed = MAX_TIME_MS;
+                    stopTimer();
+                    alert(" TIME UP!");
+                }
+                updateTimerUI();
+            }, 10);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            msElapsed = 0;
+            updateTimerUI();
+        }
+
+        // --- ระบบคะแนน ---
+        function changeScore(team, val) {
+            if (team === 'red') {
+                soccerScore.red = Math.max(0, soccerScore.red + val);
+                document.getElementById('scoreRed').innerText = soccerScore.red;
+            } else {
+                soccerScore.blue = Math.max(0, soccerScore.blue + val);
+                document.getElementById('scoreBlue').innerText = soccerScore.blue;
+            }
+        }
+
+        function resetSoccer() {
+            if (!confirm("รีเซ็ตคะแนนและเวลาทั้งหมด?")) return;
+            resetTimer();
+            soccerScore = { red: 0, blue: 0 };
+            document.getElementById('scoreRed').innerText = "0";
+            document.getElementById('scoreBlue').innerText = "0";
+        }
+
+      async function saveSoccerResult() {
+    const redId = document.getElementById('redTeamSelect').value;
+    const blueId = document.getElementById('blueTeamSelect').value;
+    const btn = document.querySelector('button[onclick="saveSoccerResult()"]');
+
+    if (!redId || !blueId) return alert("กรุณาเลือกทีมทั้งสองฝั่งก่อนบันทึก!");
+    if (!confirm("ยืนยันการบันทึกผลการแข่งขัน?")) return;
+
+    // หาผู้ชนะ (ส่งแค่ชื่อทีม)
+    let winner = "เสมอ";
+    if (soccerScore.red > soccerScore.blue) {
+        winner = allTeamsData[redId].name + " ชนะ";
+    } else if (soccerScore.blue > soccerScore.red) {
+        winner = allTeamsData[blueId].name + " ชนะ";
+    }
+
+    // ดึงเฉพาะตัวเลข 20 หรือ 40 จากชื่อ Sheet
+    const categoryName = currentSheetName.includes("20") ? "Class 20" : "Class 40";
+
+    const payload = {
+        action: "saveSoccer",
+        sheetName: "Scores Soccer",
+        category: categoryName,
+        redTeam: allTeamsData[redId],
+        blueTeam: allTeamsData[blueId],
+        redScore: soccerScore.red,
+        blueScore: soccerScore.blue,
+        matchTime: document.getElementById('soccerTimer').innerText,
+        winner: winner,
+        timestamp: new Date().toLocaleString('th-TH')
+      };
+
+    btn.innerText = " SAVING..."; btn.disabled = true;
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload)
+        });
+        alert(" บันทึกข้อมูลเรียบร้อย!\nรอบที่กำลังบันทึกจะถูกนับต่อจากข้อมูลเดิมในชีท");
+        resetSoccer();
+    } catch (e) { alert("❌ บันทึกไม่สำเร็จ"); }
+    finally { btn.innerText = "FINISH & SAVE"; btn.disabled = false; }
+}
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            getUrlParams();
+            syncWithDatabase();
+        });
+    </script>
+</body>
+</html>
