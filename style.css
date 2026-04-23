@@ -1,0 +1,472 @@
+/* =============================================================
+   1. CONFIGURATION & BASE STYLES (ค่าตั้งต้นและพื้นฐาน)
+   ============================================================= */
+:root {
+    --primary: #dc2626;
+    --bg-dark: #0f172a;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: var(--bg-dark);
+    color: white;
+    margin: 0;
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* --- Typography --- */
+.race-font { font-family: 'Chakra Petch', sans-serif; }
+.digital-font { font-family: 'Share Tech Mono', monospace; }
+
+/* ข้อความโลโก้หน้าแรกที่มีความเอียง (Skew) */
+.racing-logo-text {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: -0.05em;
+    transform: skewX(-18deg);
+    display: inline-block;
+    color: white;
+}
+
+.racing-logo-text span.red-accent {
+    color: #dc2626;
+}
+
+/* --- Panels & Containers --- */
+.glass-panel {
+    background: rgba(30, 41, 59, 0.78);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+.card-glass {
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+}
+
+/* การ์ดเมนูในหน้าแรก (Home Cards) */
+.home-card {
+    background: rgba(15, 23, 42, 0.92);
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 35px 80px rgba(15, 23, 42, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.home-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 45px 100px rgba(215, 211, 211, 0.45);
+}
+
+/* --- Buttons & Inputs --- */
+.btn-action {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.2);
+}
+
+.btn-action:active {
+    transform: scale(0.95);
+}
+
+/* ปุ่มควบคุมเวลา (Start/Stop/Reset) */
+.btn-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: white !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-timer:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+    box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+.btn-timer:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.btn-timer-start {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.btn-timer-stop {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.btn-timer-reset {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+}
+
+/* ปุ่มสไตล์เด้ง (Pop Effect) */
+.btn-pop {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.btn-pop:hover {
+    transform: scale(1.04) translateY(-5px) !important;
+    filter: brightness(1.1);
+}
+
+/* ปุ่มสไตล์แข่งรถ (Racing Style) */
+.btn-racing {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    transition: all 0.3s;
+    color: white;
+    text-transform: uppercase;
+    font-style: italic;
+    font-family: 'Chakra Petch';
+}
+
+.btn-racing:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(220, 38, 38, 0.692);
+}
+
+/* --- Tables & Scoring --- */
+.glass-panel table th,
+.glass-panel table td {
+    vertical-align: middle !important;
+}
+
+#scoreBody tr td:first-child {
+    text-align: left !important;
+    vertical-align: middle !important;
+    padding-left: 1.5rem;
+}
+
+/* แถวลำดับที่ 1, 2, 3 (Dark Mode) */
+.winner-row { background: linear-gradient(90deg, rgba(250, 204, 21, 0.1) 0%, transparent 100%); border-left: 4px solid #FACC15 !important; }
+.rank-2nd-row { background: linear-gradient(90deg, rgba(229, 231, 235, 0.1) 0%, transparent 100%); border-left: 4px solid #E5E7EB !important; }
+.rank-3rd-row { background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, transparent 100%); border-left: 4px solid #F59E0B !important; }
+
+/* สีตัวอักษรและเงาของลำดับ */
+.rank-1st { color: #FACC15; text-shadow: 0 0 20px rgba(250, 204, 21, 0.6); }
+.rank-2nd { color: #E5E7EB; text-shadow: 0 0 15px rgba(229, 231, 235, 0.4); }
+.rank-3rd { color: #F59E0B; text-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+
+/* สไตล์พิเศษสำหรับรายการ THE BEST ในหน้าแสดงผลรายทีม */
+.best-round-row { background: linear-gradient(90deg, rgba(34, 197, 94, 0.15) 0%, transparent 100%); border-left: 4px solid #22c55e !important; }
+
+/* สไตล์แผงตัวเลขคะแนนแบบดิจิทัล */
+.score-box-glow {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.score-box-glow::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+.timer-glow {
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+    color: #f87171;
+}
+
+/* =============================================================
+   6. FORM ELEMENTS (กล่องรับข้อมูล)
+   ============================================================= */
+.input-box {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* =============================================================
+   7. ANIMATIONS & EFFECTS (แอนิเมชันและเอฟเฟกต์)
+   ============================================================= */
+@keyframes spin-sync {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sync-icon-spin {
+    display: inline-block;
+    animation: spin-sync 1s linear infinite;
+}
+
+/* ปุ่มสลับธีม (Theme Toggle) */
+.theme-toggle-btn {
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle-btn svg {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.4) !important;
+    transform: scale(1.1) rotate(5deg) !important;
+}
+
+.theme-toggle-btn:hover svg {
+    transform: rotate(90deg) scale(1.2);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.9) !important;
+}
+
+/* =============================================================
+   8. THEME MANAGEMENT - LIGHT MODE (การจัดการธีมสว่าง)
+   ============================================================= */
+/* ปุ่มหน้าแรกเมื่อ Hover ใน Dark Mode: เปลี่ยนเป็นสีดำ */
+#homePage .bg-red-600:hover, 
+#homePage .bg-emerald-600:hover,
+#homePage .bg-blue-600:hover,
+#homePage .bg-cyan-600:hover,
+#homePage .bg-orange-600:hover {
+    background-color: #000000 !important;
+    color: white !important;
+    transform: scale(1.05) !important;
+}
+
+body.light-mode {
+    background-color: #f8fafc;
+    color: #0f172a;
+    background-image: radial-gradient(circle at 50% 50%, #f1f5f9 0%, #e2e8f0 100%);
+}
+body.light-mode #homePage {
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+body.light-mode .glass-panel,
+body.light-mode .card-glass {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(148, 163, 184, 0.35);
+    color: #0f172a;
+    box-shadow: 0 20px 60px rgba(148, 163, 184, 0.14);
+}
+body.light-mode .input-box {
+    background: rgba(248, 250, 252, 0.95);
+    border-color: rgba(226, 232, 240, 0.5);
+    color: #0f172a;
+}
+
+body.light-mode button:not(.btn-racing) {
+    color: #0f172a !important;
+}
+
+body.light-mode .btn-racing,
+body.light-mode #homePage .bg-red-600,
+body.light-mode #homePage .bg-emerald-600,
+body.light-mode #homePage .bg-blue-600,
+body.light-mode #homePage .bg-cyan-600,
+body.light-mode #homePage .bg-orange-600 {
+    color: white !important;
+}
+
+body.light-mode .btn-racing {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+body.light-mode .btn-racing:hover {
+    background: #000000 !important;
+    color: white !important;
+}
+
+#displayRound,
+#displayRound .bg-red-600 {
+    color: white !important;
+}
+
+body.light-mode .timer-glow {
+    color: #dc2626;
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.25);
+}
+
+body.light-mode .race-font,
+body.light-mode .text-white,
+body.light-mode .racing-logo-text {
+    color: #0f172a !important;
+}
+
+body.light-mode #statusBadge,
+body.light-mode #displayRound,
+body.light-mode #displayRound .bg-red-600 {
+    color: #0f172a !important;
+}
+
+body.light-mode #displayRound .bg-red-600 {
+    background-color: rgba(254, 202, 202, 0.95) !important;
+}
+
+body.light-mode .text-white\/40,
+body.light-mode .text-white\/50 {
+    color: rgba(15, 23, 42, 0.65) !important;
+}
+
+/* เฉพาะชื่อทีมและสมาชิกในตารางให้เป็นสีดำในธีมสว่าง */
+body.light-mode #scoreBody td div {
+    color: #000000 !important;
+}
+
+body.light-mode .border-white\/5,
+body.light-mode .border-white\/10 {
+    border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+body.light-mode .bg-slate-700\/50,
+body.light-mode .bg-slate-800,
+body.light-mode .bg-slate-800\/30,
+body.light-mode .bg-slate-900,
+body.light-mode .bg-slate-950,
+body.light-mode .bg-black\/40 {
+    background: rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-mode .bg-red-900\/20 {
+    background-color: rgba(254, 226, 226, 0.35) !important;
+}
+
+body.light-mode .bg-blue-900\/20 {
+    background-color: rgba(219, 234, 254, 0.35) !important;
+}
+
+body.light-mode .text-Black-600,
+body.light-mode .border-red-600 {
+    color: #b91c1c !important;
+    border-color: #b91c1c !important;
+}
+
+body.light-mode .text-amber-400 {
+    color: #b45309 !important;
+}
+
+body.light-mode .bg-amber-400\/5 {
+    background: rgba(245, 158, 11, 0.1) !important;
+}
+
+body.light-mode .theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(148, 163, 184, 0.25) !important;
+    color: #0f172a !important;
+}
+
+body.light-mode #homePage button[onclick="toggleTheme()"]:hover {
+    background: rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode #homePage .bg-red-600 {
+    background-color: #dc2626 !important;
+}
+
+body.light-mode #homePage .bg-emerald-600 {
+    background-color: #059669 !important;
+}
+
+body.light-mode #homePage .bg-blue-600 {
+    background-color: #2563eb !important;
+}
+
+body.light-mode #homePage .bg-cyan-600 {
+    background-color: #0891b2 !important;
+}
+
+body.light-mode #homePage .bg-orange-600 {
+    background-color: #ea580c !important;
+}
+
+body.light-mode #homePage .bg-red-600:hover,
+body.light-mode #homePage .bg-emerald-600:hover,
+body.light-mode #homePage .bg-blue-600:hover,
+body.light-mode #homePage .bg-cyan-600:hover,
+body.light-mode #homePage .bg-orange-600:hover {
+    background-color: #000000 !important;
+    color: white !important;
+    transform: scale(1.05) !important;
+}
+
+/* Light Mode Ranks */
+body.light-mode .rank-1st { color: #b48a04; text-shadow: none; }
+body.light-mode .rank-2nd { color: #64748b; text-shadow: none; }
+body.light-mode .rank-3rd { color: #9a3412; text-shadow: none; }
+
+/* ปรับแต่ง Home Card ใน Light Mode */
+body.light-mode .home-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-style: solid;
+    border-color: rgba(148, 163, 184, 0.18);
+    box-shadow: 0 35px 80px rgba(148, 163, 184, 0.16);
+}
+
+body.light-mode .home-card:hover {
+    border-color: rgba(148, 163, 184, 0.3);
+    box-shadow: 0 45px 100px rgba(148, 163, 184, 0.2);
+}
+
+/* ปรับแต่งแถวและลำดับใน Light Mode */
+body.light-mode .winner-row { background: linear-gradient(90deg, rgba(250, 204, 21, 0.408) 0%, transparent 100%); border-left: 4px solid #FACC15 !important; }
+body.light-mode .rank-2nd-row { background: linear-gradient(90deg, rgba(85, 114, 154, 0.456) 0%, transparent 100%); border-left: 4px solid #4a618e !important; }
+body.light-mode .rank-3rd-row { background: linear-gradient(90deg, rgba(154, 52, 18, 0.537) 0%, transparent 100%); border-left: 4px solid #F59E0B !important; }
+body.light-mode .best-round-row { background: linear-gradient(90deg, rgba(22, 135, 63, 0.559) 0%, transparent 100%); border-left: 4px solid #15803d !important; }
+
+/* ส่วนหัวและตัวจับเวลาใน Light Mode */
+body.light-mode header.bg-white\/5 {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(15px);
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode #soccerTimer, 
+body.light-mode #futsalTimer { 
+    color: #1e293b !important; 
+    text-shadow: none !important;
+}
+
+body.light-mode #scoreRed { 
+    color: #b91c1c !important; 
+    text-shadow: 0 10px 20px rgba(185, 28, 28, 0.1);
+}
+body.light-mode #scoreBlue { 
+    color: #1d4ed8 !important; 
+    text-shadow: 0 10px 20px rgba(29, 78, 216, 0.1);
+}
+
+body.light-mode .score-box-glow {
+    background: white !important;
+    border-color: 2px solid rgb(0, 0, 0) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05) !important;
+}
+
+body.light-mode select {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #334155 !important;
+}
+
+body.light-mode .btn-timer-reset {
+    background: #e2e8f0 !important;
+    color: #475569 !important;
+    border: none !important;
+}

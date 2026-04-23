@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRONE MRC 2026 - Control System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,700;1,700&family=Orbitron:wght@400;900&family=Share+Tech+Mono&family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-900 text-white transition-colors duration-500">
+
+    <section id="homePage" class="min-h-screen bg-slate-900 flex items-center justify-center p-6">
+        
+        <button onclick="toggleTheme()" class="theme-toggle-btn absolute top-6 right-6 p-4 bg-slate-800/40 hover:bg-slate-700 text-white rounded-full border border-white/10 shadow-xl z-[100]" title="Toggle Theme">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+
+        <div class="max-w-7xl w-full text-center">
+            <div class="mb-10">
+                <h3 class="text-red-600 font-bold tracking-[0.5em] mb-4 animate-pulse uppercase" style="font-family: 'Share Tech Mono';">DRONEBOT SYSTEM</h3>
+                <h1 class="racing-logo-text text-7xl md:text-9xl font-black uppercase leading-none">
+                    DRONE <span class="red-accent">MRC</span><br>2026
+                </h1>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 px-4">
+                
+                <div class="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm rounded-3xl border-2 border-white/5 bg-slate-800/30 p-6 shadow-2xl transition-all card-glass home-card border-t-4 border-red-500">
+                    <div class="bg-red-600 w-12 h-1 rounded-full mb-4 mx-auto"></div>
+                    <h2 class="race-font text-2xl font-black text-white italic mb-6 uppercase">Drone Racing</h2>
+                    <button onclick="location.href='race-control.html?event=Drone Racing&sheet=Data Drone Racing'" class="w-full bg-red-600 hover:bg-red-500 text-white font-black py-4 rounded-xl transition-all uppercase italic shadow-lg">Enter Circuit</button>
+                </div>
+
+                <div class="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm rounded-3xl border-2 border-white/5 bg-slate-800/30 p-6 shadow-2xl transition-all card-glass home-card border-t-4 border-emerald-500">
+                    <div class="bg-emerald-500 w-12 h-1 rounded-full mb-4 mx-auto"></div>
+                    <h2 class="race-font text-2xl font-black text-white italic mb-6 uppercase">Remote Air Race</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="location.href='race-control.html?event=Remote Air Race&sheet=Data Remote Air(Junior)'" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Junior</button>
+                        <button onclick="location.href='race-control.html?event=Remote Air Race&sheet=Data Remote Air(Senior)'" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Senior</button>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm rounded-3xl border-2 border-white/5 bg-slate-800/30 p-6 shadow-2xl transition-all card-glass home-card border-t-4 border-blue-500">
+                    <div class="bg-blue-500 w-12 h-1 rounded-full mb-4 mx-auto"></div>
+                    <h2 class="race-font text-2xl font-black text-white italic mb-6 uppercase">Auto Air Race</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                       <button onclick="location.href='race-control.html?event=Automatic Air Race&sheet=Data Automatic Air Race (junior)'" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Junior</button>
+                       <button onclick="location.href='race-control.html?event=Automatic Air Race&sheet=Data Automatic Air Race (senior)'" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Senior</button>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm rounded-3xl border-2 border-white/5 bg-slate-800/30 p-6 shadow-2xl border-t-4 border-cyan-500 card-glass home-card">
+                    <div class="bg-cyan-500 w-12 h-1 rounded-full mb-4 mx-auto"></div>
+                    <h2 class="race-font text-2xl font-black text-cyan-400 italic mb-6 uppercase">Drone Soccer</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="location.href='soccer.html?event=Drone Soccer&sheet=Drone Soccer Class20(3x3)'" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Class 20</button>
+                        <button onclick="location.href='soccer.html?event=Drone Soccer&sheet=Drone Soccer Class40(3x3)'" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-black py-4 rounded-xl uppercase italic">Class 40</button>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-sm rounded-3xl border-2 border-white/5 bg-slate-800/30 p-6 shadow-2xl border-t-4 border-orange-500 card-glass home-card">
+                    <div class="bg-orange-500 w-12 h-1 rounded-full mb-4 mx-auto"></div>
+                    <h2 class="race-font text-2xl font-black text-orange-500 italic mb-6 uppercase">Futsal</h2>
+                   <button onclick="location.href='futsal.html'" 
+        class="w-full bg-orange-600 hover:bg-orange-500 text-white font-black py-4 rounded-xl transition-all uppercase italic"> Enter Match </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="app.js"></script>
+</body>
+</html>
